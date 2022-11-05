@@ -1,38 +1,89 @@
-.App {
-  text-align: center;
+.wrapper {
+  display: grid;
+  grid-template-areas:
+      "header header header nav"
+      "article article article ads";
+  grid-template-rows: 1fr 6fr;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-gap: 10px;
+  /* height: 100vh; */
+  margin: 0;
+  height:100%;
+  min-height:100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#pageHeader, #mainNav, #siteAds {
+  font-size: 2.5vh;
+  padding: 5px;
+  background-color: whitesmoke;
+  height:100%;
+  min-height:100%;
+}
+#root {
+  height:100%;
+  min-height:100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#pageHeader {
+  grid-area: header;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#mainContent {
+  grid-area: article;
 }
 
-.App-link {
-  color: #61dafb;
+#mainNav {
+  grid-area: nav;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#siteAds {
+  grid-area: ads;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  min-height:100%;
+}
+
+.card {
+  box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+  border-width: 0;
+  transition: all .2s;
+}
+html {
+  height:100%;
+}
+
+body {
+  padding-left:10px;
+  padding-right: 40px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  height:100%;
+}
+
+.crew {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.bi {
+  font-size: 4vh;
+}
+
+.bi .name {
+  font-size: 2vh;
+  font-style: normal;
+  margin-left: 5px;
+  /*position:absolute;
+  left:75px; 
+  top:25px;*/
+}
+
+.total {
+  padding:10px;
+  font-size: 2vh;
 }
