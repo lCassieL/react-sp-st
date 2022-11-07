@@ -1,0 +1,21 @@
+.crew {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+  
+.bi {
+  font-size: 4vh;
+}
+  
+.bi .name {
+  font-size: 2vh;
+  font-style: normal;
+  margin-left: 5px;
+}
+  
+.total {
+  padding:10px;
+  font-size: 2vh;
+}

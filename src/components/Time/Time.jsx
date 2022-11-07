@@ -1,5 +1,7 @@
+import s from './Time.module.css';
 const Time = ({date}) => {
     const dateTemplate = () => {
+        if(!date) return 'loading...'
         let day = date.toLocaleString('en-US', {weekday: 'long'})
         let month = date.toLocaleString('en-US', {month: 'short'})
         let date_str = `Current UTC time: ${date.getUTCHours()}:${String(date.getUTCMinutes()).padStart(2, '0')}\n
@@ -10,11 +12,10 @@ const Time = ({date}) => {
         return newlines_str
     } 
     return (
-        <div className="card" id="mainNav">
-            {console.log('render time')}
+        <div className="card" id="time">
             {dateTemplate()}
         </div>
     )
 }
 
-export default Time
+export default Time;

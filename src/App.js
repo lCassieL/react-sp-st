@@ -1,19 +1,15 @@
 import './App.css';
-import Location from './components/Location';
-import Time from './components/Time';
-import Map from './components/Map';
-import Crew from './components/Crew';
+import Location from './components/Location/Location';
+import Time from './components/Time/Time';
+import Map from './components/Map/Map';
+import Crew from './components/Crew/Crew';
 import {useState} from 'react';
 import {useEffect} from 'react';
 
 function App() {
-  const [location, setLocation] = useState({"timestamp": 1667477595, 
-                                            "iss_position": {
-                                                "longitude": "130.8122", 
-                                                "latitude": "-11.8121"}, 
-                                            "message": "success"})
-  const [crew, setCrew] = useState([])
-  const updateLocation = () => {
+  const [iss_data, setISSData] = useState({})
+
+  const updateLocation = (callback) => {
       let xhr = new XMLHttpRequest()
       let body = ''
       xhr.open('GET', 'http://api.open-notify.org/iss-now.json', true)
@@ -22,18 +18,13 @@ function App() {
         if(xhr.readyState === 4 && xhr.status === 200) {
           let json = xhr.responseText
           let data = JSON.parse(json)
-          console.log('update L')
-          setLocation(data)
-          /*setLocation(location => ({
-            ...location,
-            ...data
-          }))*/
+          callback(data)
         }
       }
       xhr.send(body)
   }
 
-  const updateCrew = () => {
+  const updateCrew = (location_data) => {
     let xhr = new XMLHttpRequest()
     let body = ''
     xhr.open('GET', 'http://api.open-notify.org/astros.json', true)
@@ -45,25 +36,32 @@ function App() {
         let iss_crew = data.people.filter((member) => {
           return (member.craft === "ISS" ? true : false)
         })
-        console.log('update C')
-        setCrew([...iss_crew])
+        setISSData(
+            {
+                iss_position : {
+                    longitude : location_data.iss_position.longitude,
+                    latitude : location_data.iss_position.latitude
+                },
+                timestamp : location_data.timestamp,
+                crew : [...iss_crew]
+            }
+        )
       }
     }
     xhr.send(body)
 }
 
   useEffect(() => {
-    updateLocation()
-    updateCrew()
-    let timerId = setInterval(() => {updateLocation(); updateCrew()}, 5000)
+    updateLocation(updateCrew)
+    let timerId = setInterval(() => {updateLocation(updateCrew)}, 5000)
   }, [])
   
   return (
     <div className="wrapper">
-      <Location iss_position={location.iss_position}/>
-      <Time date={new Date(Number(location.timestamp)*1000)}/>
-      <Map iss_position={location.iss_position}/>
-      <Crew crew={crew}/>
+      <Location iss_position={iss_data.iss_position}/>
+      <Time date={iss_data.timestamp ? new Date(Number(iss_data.timestamp)*1000) : null}/>
+      <Map iss_position={iss_data.iss_position}/>
+      <Crew crew={iss_data.crew}/>
     </div>
   );
 }
